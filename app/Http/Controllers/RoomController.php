@@ -15,7 +15,7 @@ class RoomController extends Controller
         $room = Room::select('id', 'room_code')->get();
         return response()->json($room);
     }
-    }
+    
 
     /**
      * Show the form for creating a new resource.
