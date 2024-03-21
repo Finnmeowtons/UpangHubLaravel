@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('teacher', TeacherController::class);
+Route::apiResource('room', RoomController::class);
+Route::apiResource('course', CourseController::class);
+Route::apiResource('schedule', ScheduleController::class);
