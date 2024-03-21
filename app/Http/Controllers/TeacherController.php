@@ -20,7 +20,8 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        $teachers = Teacher::select('id', 'name')->get();
+        return response()->json($teachers);
     }
 
     /**
@@ -28,7 +29,15 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required'
+        ]);
+
+        $teacher = Teacher::create($validatedData);
+        return response()->json([
+            'id' => $teacher->id,
+            'name' => $teacher->course_code
+        ], 201);
     }
 
     /**
@@ -36,7 +45,7 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        //
+        return response()->json($teacher);
     }
 
     /**
@@ -52,7 +61,12 @@ class TeacherController extends Controller
      */
     public function update(Request $request, Teacher $teacher)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required'
+        ]);
+
+        $teacher->update($validatedData);
+        return response()->json($teacher);
     }
 
     /**
@@ -60,6 +74,7 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        //
+        $teacher->delete();
+        return response()->json([ 'message' => "Deleted" ]); 
     }
 }
