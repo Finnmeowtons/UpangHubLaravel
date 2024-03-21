@@ -47,7 +47,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return response()->json($course);
     }
 
     /**
@@ -63,7 +63,13 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $validatedData = $request->validate([
+            'course_code' => 'required',
+            'course_name' => 'required'
+        ]);
+
+        $course->update($validatedData);
+        return response()->json($course);
     }
 
     /**
@@ -71,6 +77,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return response()->json([ 'message' => "Deleted" ]); 
     }
 }
