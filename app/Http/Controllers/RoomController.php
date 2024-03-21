@@ -12,7 +12,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $room = Room::select('id', 'room_code')->get();
+        return response()->json($room);
+    }
     }
 
     /**
@@ -28,7 +30,15 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'room_code' => 'required'
+        ]);
+
+        $room = Room::create($validatedData);
+        return response()->json([
+            'id' => $room->id,
+            'room_code' => $room->room_code
+        ], 201);
     }
 
     /**
@@ -36,7 +46,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        return response()->json($room);
     }
 
     /**
@@ -52,7 +62,12 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+        $validatedData = $request->validate([
+            'room_code' => 'required'
+        ]);
+
+        $room->update($validatedData);
+        return response()->json($room);
     }
 
     /**
@@ -60,6 +75,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        $room->delete();
+        return response()->json([ 'message' => "Deleted" ]); 
     }
 }
